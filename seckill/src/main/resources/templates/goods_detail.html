@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商品详情</title>
+</head>
+<body>
+
+<div class="panel panel-default">
+    <div class="panel-heading">秒杀商品详情</div>
+    <div class="panel-body">
+        <span th:if="${user == null}">您还没有登录，请登录后再操作</span>
+        <span>没有收货地址的提示...</span>
+    </div>
+
+    <table class="table" id="goodslist">
+        <tr>
+            <td>商品名称</td>
+            <td colspan="3" th:text="${goods.goodsName}"></td>
+        </tr>
+        <tr>
+            <td>商品图片</td>
+            <td colspan="3"><img th:src="@{${goods.goodsImg}}" width="200" height="200"/></td>
+        </tr>
+        <tr>
+            <td>秒杀开始时间</td>
+            <td th:text="${#dates.format(goods.startDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <input type="hidden" id="startRemains" th:value="${startRemains}"/>
+            <input type="hidden" id="endRemains" th:value="${endRemains}"/>
+            <td id="seckillTip">
+                <span th:if="${seckillStatus eq 0}">秒杀倒计时：<span id="countDown" th:text="${startRemains}"></span>秒</span>
+                <span th:if="${seckillStatus eq 1}">正在进行中</span>
+                <span th:if="${seckillStatus eq 2}">活动已结束</span>
+            </td>
+            <td>
+                <form id="seckillForm" method="post" action="/seckill/do_seckill">
+                    <button class="btn btn-primary btn-block" type="submit" id="buyButtom">立即秒杀</button>
+                    <input type="hidden" name="goodsId" th:value="${goods.id}"/>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>商品原价</td>
+            <td colspan="3" th:text="${goods.goodsPrice}"></td>
+        </tr>
+        <tr>
+            <td>秒杀价</td>
+            <td colspan="3" th:text="${goods.seckillPrice}"></td>
+        </tr>
+        <tr>
+            <td>库存量</td>
+            <td colspan="3" th:text="${goods.stockCount}"></td>
+        </tr>
+    </table>
+
+</div>
+</body>
+<script type="text/javascript" th:src="@{/js/jquery-3.5.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/bootstrap-3.4.1-dist/js/bootstrap.min.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.4.1-dist/css/bootstrap.min.css}">
+<script type="text/javascript" th:src="@{/jquery-validation/dist/jquery.validate.min.js}"></script>
+<script type="text/javascript" th:src="@{/jquery-validation/dist/localization/messages_zh.min.js}"></script>
+<!--<script type="text/javascript" th:src="@{/layui/lay/modules/layer.js}"></script>-->
+<script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/common.js}"></script>
+</html>
