@@ -36,7 +36,7 @@ public class MQReceiver {
         SeckillOrderEntity orderEntity = orderService.getSeckillOrderByUserIdGoodsId(user.getId(), goodsId);
         if (orderEntity != null) return;
 
-       seckillService.seckill(user, goodsVo);
+        seckillService.seckill(user, goodsVo);   // 这里没有直接返回给客户秒杀的结果，而是由客户端轮询来查订单
 
     }
 
